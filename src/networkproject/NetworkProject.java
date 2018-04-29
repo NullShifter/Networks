@@ -18,7 +18,7 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author alexsanford
+ * @author alexsanford, Justin Malmstedt
  */
 public class NetworkProject extends Application {
     
