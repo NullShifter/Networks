@@ -5,6 +5,12 @@
  */
 package networkproject;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -24,6 +30,10 @@ public class NetworkProject extends Application {
     
     private TextField website;
     private TextField file;
+    private Socket socket = null;
+    private DataOutputStream output = null;
+    private DataInputStream input = null;
+    private String display = "";
     
     @Override
     public void start(Stage primaryStage) {
@@ -55,9 +65,26 @@ public class NetworkProject extends Application {
             
             @Override
             public void handle(ActionEvent event) {
-                file.setText("About to retrieve data");
-                //holds the URL of the website that we want to go to.
-                String URL = website.getText();
+                try {
+                    file.setText("About to retrieve data");
+                    //holds the URL of the website that we want to go to.
+                    String URL = website.getText();                    
+                    socket = new Socket("localhost", 8008);
+                    output = new DataOutputStream(socket.getOutputStream());
+                    input = new DataInputStream(socket.getInputStream());
+                    
+                    if(socket != null && output != null && input != null){
+                        output.writeUTF(URL);
+                        output.flush();
+                        
+                        display = input.readUTF();
+                        file.setText(display);
+                        
+                    }
+                    
+                } catch (IOException ex) {
+                    Logger.getLogger(NetworkProject.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 
             }
         });

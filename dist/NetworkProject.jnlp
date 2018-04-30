@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="NetworkProject.jar" size="2819" download="eager" />
+    <jar href="NetworkProject.jar" size="2813" download="eager" />
   </resources>
   <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="NetworkProject" >
     <param name="requiredFXVersion" value="8.0+"/>
