@@ -26,7 +26,7 @@ import javafx.stage.Stage;
  *
  * @author alexsanford, Justin Malmstedt
  */
-public class NetworkProject extends Application {
+public class Browser extends Application {
     
     private TextField website;
     private TextField file;
@@ -75,7 +75,7 @@ public class NetworkProject extends Application {
                     
                     if(socket != null && output != null && input != null){
                         output.writeUTF(URL);
-                        output.flush();
+                        //output.flush(); This was invalidating the incoming stream on the DNS
                         
                         display = input.readUTF();
                         file.setText(display);
@@ -83,7 +83,7 @@ public class NetworkProject extends Application {
                     }
                     
                 } catch (IOException ex) {
-                    Logger.getLogger(NetworkProject.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(Browser.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 
             }
@@ -94,7 +94,7 @@ public class NetworkProject extends Application {
         
         Scene scene = new Scene(root, 800, 750);
         
-        primaryStage.setTitle("The Ultimate Web Broweser!!!!");
+        primaryStage.setTitle("The Ultimate Web Browser!!!!");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
