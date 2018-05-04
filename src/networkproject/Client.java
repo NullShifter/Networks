@@ -56,32 +56,16 @@ catch(IOException ex)        {
             Socket browserSocket = serverSocket.accept();
             DataInputStream filenum = new DataInputStream(browserSocket.getInputStream());
             DataOutputStream output = new DataOutputStream(browserSocket.getOutputStream());
-            int incoming = filenum.readByte();
-            
-<<<<<<< Updated upstream
-            
-            if (incoming == 1){
-                DataOutputStream output = new DataOutputStream(browserSocket.getOutputStream());
-                output.writeUTF("<html><title>This is Google.com</title></html>");
-            }
-            else if (incoming == 2){
-                DataOutputStream output = new DataOutputStream(browserSocket.getOutputStream());
-                output.writeUTF("<html><title>This is webServer.com</title></html>");
-            }
-            else if (incoming == 3){
-                DataOutputStream output = new DataOutputStream(browserSocket.getOutputStream());
-                output.writeUTF("<html><title>This is Yahoo.com</title></html>");
-            }
-=======
+            int incoming = filenum.readByte();         
         switch (incoming) {
             case 1:
-                output.writeUTF("this is file 1");
+                output.writeUTF("<html><title>This is Google.com</title></html>");
                 break;
             case 2:
-                output.writeUTF("this is file 2");
+                output.writeUTF("<html><title>This is webServer.com/title></html>");
                 break;
             case 3:
-                output.writeUTF("this is file 3");
+                output.writeUTF("<html><title>This is Yahoo.com</title></html>");
                 break;
             default:
                 break;
@@ -91,7 +75,6 @@ catch(IOException ex)        {
             filenum.close();
             browserSocket.close();
             serverSocket.close(); 
->>>>>>> Stashed changes
     }
     
 }
