@@ -30,10 +30,12 @@ public class DNS_Server extends Application  {
     @Override
     public void start(Stage primaryStage) {
         System.out.println("Running DNS Server");
-        
+        for(int i = 0; i < 10; ++i){
+            
         try{startserver();}
         catch(IOException ex){
             
+        }
         }
         
         StackPane root = new StackPane();
@@ -61,6 +63,7 @@ public class DNS_Server extends Application  {
             DataInputStream hostname = new DataInputStream(browserSocket.getInputStream());
             String incoming = hostname.readUTF();           
             int file = CheckForServer(incoming);
+            if(file != 0){
             
             DataOutputStream out = new DataOutputStream(serverConnection.getOutputStream());
             out.writeByte(file);
@@ -71,6 +74,11 @@ public class DNS_Server extends Application  {
             DataOutputStream output = new DataOutputStream(browserSocket.getOutputStream());
             output.writeUTF(write);
             System.out.println(incoming);
+            }
+            else{
+                DataOutputStream finOutput = new DataOutputStream(browserSocket.getOutputStream());
+                finOutput.writeUTF("The website you entered was not a valid website path, Please try again.");
+            }
             System.out.println("closed");
             hostname.close();
             browserSocket.close();

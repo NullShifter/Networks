@@ -25,10 +25,12 @@ import javafx.stage.Stage;
 public class Client extends Application {
     
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws IOException {
         
         StackPane root = new StackPane();
-        
+        for(int i = 0; i < 10; ++i){
+        runClient();
+        }
         Scene scene = new Scene(root, 300, 250);
         
         primaryStage.setTitle("Client");
@@ -53,8 +55,10 @@ catch(IOException ex)        {
         ServerSocket serverSocket = new ServerSocket(9009);
             Socket browserSocket = serverSocket.accept();
             DataInputStream filenum = new DataInputStream(browserSocket.getInputStream());
+            DataOutputStream output = new DataOutputStream(browserSocket.getOutputStream());
             int incoming = filenum.readByte();
             
+<<<<<<< Updated upstream
             
             if (incoming == 1){
                 DataOutputStream output = new DataOutputStream(browserSocket.getOutputStream());
@@ -68,6 +72,26 @@ catch(IOException ex)        {
                 DataOutputStream output = new DataOutputStream(browserSocket.getOutputStream());
                 output.writeUTF("<html><title>This is Yahoo.com</title></html>");
             }
+=======
+        switch (incoming) {
+            case 1:
+                output.writeUTF("this is file 1");
+                break;
+            case 2:
+                output.writeUTF("this is file 2");
+                break;
+            case 3:
+                output.writeUTF("this is file 3");
+                break;
+            default:
+                break;
+        }
+            System.out.println("finished");
+            System.out.println("closed");
+            filenum.close();
+            browserSocket.close();
+            serverSocket.close(); 
+>>>>>>> Stashed changes
     }
     
 }

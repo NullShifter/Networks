@@ -17,6 +17,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -34,6 +35,7 @@ public class Browser extends Application {
     private Socket socket = null;
     private DataOutputStream output = null;
     private String display = "";
+    private Label label = null;
     
     @Override
     public void start(Stage primaryStage) {
@@ -47,6 +49,8 @@ public class Browser extends Application {
         file = new TextField();
         file.setPrefSize(600, 715);
         
+        label = new Label("Allowed web adresses: www.google.com, www.webServer.com, www.yahoo.com");
+        
         btn.setText("Search");
         //creates an Hbox to store the textbox and website.
         HBox hb = new HBox();
@@ -55,7 +59,7 @@ public class Browser extends Application {
         
         //creates a VBox to store the hbox and the file to display
         VBox vb = new VBox();
-        vb.getChildren().addAll(hb, file);
+        vb.getChildren().addAll(hb, label, file);
         vb.setSpacing(10);
         
         
