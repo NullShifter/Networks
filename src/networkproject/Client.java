@@ -34,9 +34,12 @@ public class Client extends Application {
         primaryStage.setTitle("Client");
         primaryStage.setScene(scene);
         primaryStage.show();
-
-                
+try{
+    runClient(); 
+}
+catch(IOException ex)        {    
         
+    }
     }
 
     /**
@@ -52,17 +55,18 @@ public class Client extends Application {
             DataInputStream filenum = new DataInputStream(browserSocket.getInputStream());
             int incoming = filenum.readByte();
             
+            
             if (incoming == 1){
                 DataOutputStream output = new DataOutputStream(browserSocket.getOutputStream());
-                output.writeUTF("this is file 1");
+                output.writeUTF("<html><title>This is Google.com</title></html>");
             }
             else if (incoming == 2){
                 DataOutputStream output = new DataOutputStream(browserSocket.getOutputStream());
-                output.writeUTF("this is file 2");
+                output.writeUTF("<html><title>This is webServer.com</title></html>");
             }
             else if (incoming == 3){
                 DataOutputStream output = new DataOutputStream(browserSocket.getOutputStream());
-                output.writeUTF("this is file 3");
+                output.writeUTF("<html><title>This is Yahoo.com</title></html>");
             }
     }
     
