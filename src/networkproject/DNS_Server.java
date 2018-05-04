@@ -56,15 +56,44 @@ public class DNS_Server extends Application  {
         
             ServerSocket serverSocket = new ServerSocket(8008);
             Socket browserSocket = serverSocket.accept();
-           // browserSocket.setSoTimeout(0);
+            Socket serverConnection = new Socket("localhost", 9009);
+            
             DataInputStream hostname = new DataInputStream(browserSocket.getInputStream());
-            String incoming = hostname.readUTF();
+            String incoming = hostname.readUTF();           
+            int file = CheckForServer(incoming);
+            
+            DataOutputStream out = new DataOutputStream(serverConnection.getOutputStream());
+            out.writeByte(file);
+            
+            DataInputStream in = new DataInputStream(serverConnection.getInputStream());
+            String write = in.readUTF();
+            
             DataOutputStream output = new DataOutputStream(browserSocket.getOutputStream());
-            output.writeUTF("202");
+            output.writeUTF(write);
             System.out.println(incoming);
             System.out.println("closed");
             hostname.close();
             browserSocket.close();
             serverSocket.close(); 
 }
+    
+     private int CheckForServer(String website){
+        int getFile = 0;
+        
+        switch(website){
+            case "www.google.com":
+                getFile = 1;
+                break;
+            case "www.webServer.com":
+                getFile = 2;
+                break;
+            case "www.yahoo.com":
+                getFile = 3;
+                break;
+            default:
+                getFile = 0;
+            
+        }
+        return getFile;
+    }
 }
