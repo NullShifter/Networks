@@ -25,12 +25,16 @@ import javafx.stage.Stage;
  *
  * @author malms
  */
-public class DNS_Server extends Application {
+public class DNS_Server extends Application  {
     
     @Override
     public void start(Stage primaryStage) {
         System.out.println("Running DNS Server");
-        startserver();
+        
+        try{startserver();}
+        catch(IOException ex){
+            
+        }
         
         StackPane root = new StackPane();
         
@@ -48,19 +52,19 @@ public class DNS_Server extends Application {
         launch(args);
     }
     
-    public void startserver(){
-        try{
+    public void startserver() throws IOException{
+        
             ServerSocket serverSocket = new ServerSocket(8008);
             Socket browserSocket = serverSocket.accept();
+           // browserSocket.setSoTimeout(0);
             DataInputStream hostname = new DataInputStream(browserSocket.getInputStream());
             String incoming = hostname.readUTF();
+            DataOutputStream output = new DataOutputStream(browserSocket.getOutputStream());
+            output.writeUTF("202");
             System.out.println(incoming);
-            Socket socket = browserSocket;
-            DataOutputStream output = new DataOutputStream(socket.getOutputStream());
-            output.writeUTF("got it");
-        } catch (IOException ex) {
-            Logger.getLogger(DNS_Server.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
+            System.out.println("closed");
+            hostname.close();
+            browserSocket.close();
+            serverSocket.close(); 
+}
 }

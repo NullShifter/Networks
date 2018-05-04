@@ -8,6 +8,7 @@ package networkproject;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,7 +33,6 @@ public class Browser extends Application {
     private TextField file;
     private Socket socket = null;
     private DataOutputStream output = null;
-    private DataInputStream input = null;
     private String display = "";
     
     @Override
@@ -70,20 +70,26 @@ public class Browser extends Application {
                     //holds the URL of the website that we want to go to.
                     String URL = website.getText();                    
                     socket = new Socket("localhost", 8008);
+                    socket.setSoTimeout(0);
                     output = new DataOutputStream(socket.getOutputStream());
-                    input = new DataInputStream(socket.getInputStream());
                     
-                    if(socket != null && output != null && input != null){
+                    if(socket != null && output != null){
                         output.writeUTF(URL);
-                        //output.flush(); This was invalidating the incoming stream on the DNS
-                        
-                        display = input.readUTF();
-                        file.setText(display);
+                        System.out.println("closed");
+                        //ServerSocket serverReturn = new ServerSocket(554);
+                        //Socket port = serverReturn.accept();
+                        System.out.println("socket accepted");
+                        DataInputStream portnum = new DataInputStream(socket.getInputStream());
+                        System.out.println("got input stream");
+                        String input = portnum.readUTF();
+                        System.out.println("gottext");
+                        System.out.println(input);
+                        file.setText(input);
                         
                     }
                     
                 } catch (IOException ex) {
-                    Logger.getLogger(Browser.class.getName()).log(Level.SEVERE, null, ex);
+                    //Logger.getLogger(Browser.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 
             }
